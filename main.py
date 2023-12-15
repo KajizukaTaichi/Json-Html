@@ -1,6 +1,13 @@
+import os
 import json
-import sys
+import argparse as ap
 import webbrowser as wb
+
+parser = ap.ArgumentParser(description='jsonデータからHTMLを作成するツール')
+parser.add_argument('input_file', help='入力するjsonファイル')
+parser.add_argument('-o', '--open', action='store_true', help='作成したHTMLをブラウザで開きます')
+args = parser.parse_args()
+
 
 def dict_html(struct: dict, indent: int) -> str:
     html_text = ""
@@ -13,12 +20,20 @@ def dict_html(struct: dict, indent: int) -> str:
         html_text += '\t'*indent + f"</{tag}>\n"
     return html_text
 
-name = sys.argv[1]
-file = open(name, mode="r", encoding="utf-8")
+
+def change_extension(file_path, new_extension):
+    base_path, old_extension = os.path.splitext(file_path)
+    new_file_path = base_path + new_extension    
+    return new_file_path
+
+path: str = args.input_file
+file = open(path, mode="r", encoding="utf-8")
 struct: dict = json.load(file)
 html = dict_html(struct, 0)
 
-name = f"{name.split('.')[0]}.html"
-open(name, mode="w", encoding="utf-8").write(html)
+new_path = change_extension(path, ".html")
+open(new_path, mode="w", encoding="utf-8").write(html)
 
-wb.open(name)
+is_open = args.open
+if is_open:
+    wb.open(new_path)
