@@ -8,7 +8,7 @@ Json-Htmlは、JSONデータからHTMLコードにを生成するツールです
 2. コマンドラインで次のように実行してください：
 
     ```bash
-    python json_html_converter.py your_json_file.json
+    python main.py your_json_file.json
     ```
 
     `your_json_file.json` を変換したいJSONファイルに置き換えてください。
