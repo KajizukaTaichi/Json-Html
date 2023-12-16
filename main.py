@@ -15,14 +15,14 @@ def dict_html(struct: dict, indent: int) -> str:
     '''
 
     html_text = ""
-    for (tag,value) in struct.items():    
+    for (tag, value) in struct.items():    
         html_text += '\t'*indent + f"<{tag}>\n"
         if isinstance(value, dict):
             # 再帰的に呼び出す
             html_text += dict_html(value, indent+1)
         else:
             html_text += '\t'*indent + f"\t{value}\n"
-        html_text += '\t'*indent + f"</{tag}>\n"
+        html_text += '\t'*indent + f"</{tag.split(' ')[0]}>\n"
     return html_text
 
 
